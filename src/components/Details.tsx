@@ -2,9 +2,24 @@ import React from 'react'
 import { useParams } from 'react-router-dom'
 import {PostType} from '../types/Post.types'
 import {Link} from "react-router-dom"
-import { getOne } from '../api/pokemons.api'
+import { getOne, getList } from '../api/pokemons.api'
 import { useState, useEffect } from 'react'
 import Pokemon from '../components/Pokemon'
+
+interface Pokemon {
+    id: string;
+    name: string;
+    ability: string;
+}
+
+let getDetail = async function(id: string): Promise<Pokemon> {
+    const ability = (await getOne(id)).data.abilities[0].ability.name;
+    const numId = parseInt(id);
+    const name = (await getList(numId - 1, 1)).data.results[0].name;
+    return {
+        id, name, ability
+    }
+}
 
 function Details() {
 
@@ -12,28 +27,25 @@ function Details() {
 
     const [pokemon, setPokemon] = useState<Pokemon>()
     const [error, setError] = useState({})
+
+    
   
-    interface Pokemon {
-        id: string;
-        ability: string;
-    }
+    
     
     if (id == undefined) {
         return (
-            <h1>Not Found</h1>
+            <h1>Loading...</h1>
         )
     }
 
     useEffect(() => {
-      getOne(id).then((values) => {
-        setPokemon({id: id, ability: values.data.abilities[0].ability.name});
-        // console.log(values.data.abilities[0].ability.name);
-      })
+        getDetail(id).then(value => setPokemon(value))
     });
+  
 
     if (pokemon == undefined) {
         return (
-            <h1>Not Found</h1>   
+            <h1>Loading...</h1>   
         )    
     }
 

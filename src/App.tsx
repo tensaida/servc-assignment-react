@@ -14,14 +14,14 @@ export default function App() {
         <nav className="top">
           <ul>
             <li>
-              <Link to="/" class="link">Pokemon!</Link>
+              <Link to="/" className="link">Pokemon!</Link>
             </li>
           </ul>
         </nav>
-        
+
         <Routes>
-          <Route exact path="/" element={<Home/>} />
-          <Route exact path="/:id" element={<Details/>} />
+          <Route path="/" element={<Home/>} />
+          <Route path="/:id" element={<Details/>} />
         </Routes>
       </div>
     </Router>

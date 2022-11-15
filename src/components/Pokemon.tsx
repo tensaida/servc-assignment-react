@@ -7,10 +7,12 @@ interface Props {
 }
 
 const Pokemon:React.FC<Props> = ({pokemon}) => {
+    const id = (parseInt(pokemon.id) > 9) ? "default" : pokemon.id;
     return (
         <div>
-        <h1>{pokemon.ability}</h1>
-        <img className = "detail" src={images[pokemon.id]} />
+        <h1>{pokemon.name}</h1>
+        <h2>{pokemon.ability}</h2>
+        <img className = "detail" src={images[id]} />
        </div>)
 }
 
