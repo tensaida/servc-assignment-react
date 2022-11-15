@@ -1,31 +1,30 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import reactLogo from './assets/react.svg'
 import './App.css'
+import { getList } from './api/pokemons.api'
+import Post from './components/Post'
+import Home from './components/Home'
+import { BrowserRouter as Router, Route, Link, Routes } from "react-router-dom";
+import Details from './components/Details'
 
-function App() {
-  const [count, setCount] = useState(0)
-
+export default function App() {
   return (
-    <div className="App">
+    <Router>
       <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src="/vite.svg" className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://reactjs.org" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
+        <nav className="top">
+          <ul>
+            <li>
+              <Link to="/" class="link">Pokemon!</Link>
+            </li>
+          </ul>
+        </nav>
+        
+        <Routes>
+          <Route exact path="/" element={<Home/>} />
+          <Route exact path="/:id" element={<Details/>} />
+        </Routes>
       </div>
-      <h1>Build something cool, bro</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-    </div>
-  )
+    </Router>
+  );
+          
 }
-
-export default App
